@@ -38,5 +38,11 @@ public class BookRepositoryImpl implements BookRepository {
         }
         return result;
     }
+
+    @Override
+    public List<Book> getAllBooks() {
+        return new ArrayList<>(books.values());
+    }
+
 }
 

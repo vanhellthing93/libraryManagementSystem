@@ -13,17 +13,24 @@ public class BorrowingRepositoryImpl implements BorrowingRepository {
     private List<BorrowingRecord> borrowingHistory = new ArrayList<>();
 
     @Override
-    public boolean borrowBook(User user, Book book) {
+    public boolean borrowBookAtTime(User user, Book book, LocalDate date) {
         if (!book.isAvailable() || !user.canBorrow()) {
             return false;
         }
 
         book.setAvailable(false);
         user.getBorrowedBooks().add(book.getIsbn());
-        BorrowingRecord record = new BorrowingRecord(user, book, LocalDate.now());
+        BorrowingRecord record = new BorrowingRecord(user, book, date);
         borrowingHistory.add(record);
         return true;
     }
+
+    @Override
+    public boolean borrowBook(User user, Book book) {
+        return borrowBookAtTime(user, book, LocalDate.now());
+    }
+
+
 
     @Override
     public boolean returnBook(User user, Book book) {
@@ -46,4 +53,10 @@ public class BorrowingRepositoryImpl implements BorrowingRepository {
         }
         return overdueBooks;
     }
+
+    @Override
+    public List<BorrowingRecord> getAllBorrowingRecords() {
+        return new ArrayList<>(borrowingHistory);
+    }
+
 }

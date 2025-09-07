@@ -12,4 +12,6 @@ public interface BookRepository {
     Book findBook(String isbn);
 
     List<Book> searchBooks(String query);
+
+    List<Book> getAllBooks();
 }

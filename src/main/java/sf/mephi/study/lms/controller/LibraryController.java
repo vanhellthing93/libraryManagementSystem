@@ -62,6 +62,7 @@ public class LibraryController {
         System.out.println("1. Добавить книгу");
         System.out.println("2. Удалить книгу");
         System.out.println("3. Поиск книг");
+        System.out.println("4. Показать все книги");
         System.out.println("0. Назад");
         int choice = getIntInput("Введите выбор: ");
 
@@ -99,6 +100,17 @@ public class LibraryController {
                     }
                 }
                 break;
+            case 4:
+                List<String> allBooks = libraryService.getAllBooks();
+                if (allBooks.isEmpty()) {
+                    System.out.println("Книги не найдены.");
+                } else {
+                    for (String bookInfo : allBooks) {
+                        System.out.println(bookInfo);
+                        System.out.println("-------------------");
+                    }
+                }
+                break;
             case 0:
                 return;
             default:
@@ -110,6 +122,7 @@ public class LibraryController {
         System.out.println("\n=== Управление пользователями ===");
         System.out.println("1. Зарегистрировать пользователя");
         System.out.println("2. Поиск пользователя");
+        System.out.println("3. Показать всех пользователей");
         System.out.println("0. Назад");
         int choice = getIntInput("Введите выбор: ");
 
@@ -117,8 +130,6 @@ public class LibraryController {
             case 1:
                 System.out.print("Введите имя: ");
                 String name = scanner.nextLine();
-                System.out.print("Введите ID пользователя: ");
-                String userId = scanner.nextLine();
                 System.out.print("Введите email: ");
                 String email = scanner.nextLine();
                 int userType;
@@ -132,17 +143,28 @@ public class LibraryController {
                         System.out.println("Некорректный тип пользователя. Пожалуйста, введите 1, 2 или 3.");
                     }
                 }
-                libraryService.registerUser(name, userId, email, userType);
+                libraryService.registerUser(name, email, userType);
                 System.out.println("Пользователь зарегистрирован.");
                 break;
             case 2:
                 System.out.print("Введите ID пользователя: ");
-                userId = scanner.nextLine();
+                String userId = scanner.nextLine();
                 String userString = libraryService.findUser(userId);
                 if (userString == null) {
                     System.out.println("Пользователь не найден.");
                 } else {
                     System.out.println(userString);
+                }
+                break;
+            case 3:
+                List<String> allUsers = libraryService.getAllUsers();
+                if (allUsers.isEmpty()) {
+                    System.out.println("Пользователи не найдены.");
+                } else {
+                    for (String userInfo : allUsers) {
+                        System.out.println(userInfo);
+                        System.out.println("-------------------");
+                    }
                 }
                 break;
             case 0:
@@ -157,6 +179,7 @@ public class LibraryController {
         System.out.println("1. Выдать книгу");
         System.out.println("2. Вернуть книгу");
         System.out.println("3. Просроченные книги");
+        System.out.println("4. Все операции с книгами");
         System.out.println("0. Назад");
         int choice = getIntInput("Введите выбор: ");
 
@@ -168,6 +191,7 @@ public class LibraryController {
                 String isbn = scanner.nextLine();
                 if (libraryService.borrowBook(userId, isbn)) {
                     System.out.println("Книга выдана.");
+                    System.out.println("-------------------");
                 } else {
                     System.out.println("Не удалось выдать книгу.");
                 }
@@ -179,6 +203,7 @@ public class LibraryController {
                 isbn = scanner.nextLine();
                 if (libraryService.returnBook(userId, isbn)) {
                     System.out.println("Книга возвращена.");
+                    System.out.println("-------------------");
                 } else {
                     System.out.println("Не удалось вернуть книгу.");
                 }
@@ -190,6 +215,18 @@ public class LibraryController {
                 } else {
                     for (String bookInfo : overdueBooks) {
                         System.out.println(bookInfo);
+                        System.out.println("-------------------");
+                    }
+                }
+                break;
+            case 4:
+                List<String> borrowingOperations = libraryService.getAllBorrowingOperations();
+                if (borrowingOperations.isEmpty()) {
+                    System.out.println("Операций с книгами нет.");
+                } else {
+                    for (String operationInfo : borrowingOperations) {
+                        System.out.println(operationInfo);
+                        System.out.println("-------------------");
                     }
                 }
                 break;
