@@ -32,10 +32,7 @@ public class BookRepositoryImpl implements BookRepository {
     public List<Book> searchBooks(String query) {
         List<Book> result = new ArrayList<>();
         for (Book book : books.values()) {
-            if (book.getTitle().contains(query) ||
-                    book.getAuthor().contains(query) ||
-                    book.getIsbn().contains(query) ||
-                    book.getGenre().contains(query)) {
+            if (book.getTitle().contains(query) || book.getAuthor().contains(query) || book.getIsbn().contains(query) || book.getGenre().contains(query)) {
                 result.add(book);
             }
         }

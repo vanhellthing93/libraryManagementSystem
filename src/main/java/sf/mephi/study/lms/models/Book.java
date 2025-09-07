@@ -40,5 +40,13 @@ public class Book {
         isAvailable = available;
     }
 
+    @Override
+    public String toString() {
+        return String.format(
+                "ISBN: %s\nНазвание: %s\nАвтор: %s\nЖанр: %s\nДоступна: %s",
+                isbn, title, author, genre, isAvailable ? "Да" : "Нет"
+        );
+    }
+
 
 }
